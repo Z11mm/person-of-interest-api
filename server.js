@@ -37,7 +37,7 @@ app.post('/signup', (req, res) => {
   signup.handleSignUp(req, res, dB, bcrypt);
 });
 
-app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, dB) });
+app.get('/profile/:id', (req, res) => { profile.getProfile(req, res, dB) });
 
 app.put('/image', (req, res) => {
   const { id } = req.body;
