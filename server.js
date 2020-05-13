@@ -6,6 +6,7 @@ const knex = require('knex');
 const signup = require('./controllers/signup');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
+const image = require('./controllers/image');
 
 const dB = knex({
   client: 'pg',
@@ -37,29 +38,14 @@ app.post('/signup', (req, res) => {
   signup.handleSignUp(req, res, dB, bcrypt);
 });
 
-app.get('/profile/:id', (req, res) => { profile.getProfile(req, res, dB) });
+app.get('/profile/:id', (req, res) => {
+  profile.getProfile(req, res, dB);
+});
 
 app.put('/image', (req, res) => {
-  const { id } = req.body;
-
-  dB('users')
-    .where('id', '=', id)
-    .increment('entries', 1)
-    .returning('entries')
-    .then(entries => {
-      res.json(entries[0]);
-    })
-    .catch(err => res.status(400).json('unable to get entries'));
+  image.setImageEntries(req, res, dB);
 });
 
 app.listen(3000, () => {
   console.log('running on 3000...');
 });
-
-/* 
-/ --> res = this is working
-/signin --> POST, res: success/fail
-/signup --> POST, res: userObj/error
-/profile/:userId --> GET, res: userObj
-/image --> PUT, res: updated userObj
-*/
