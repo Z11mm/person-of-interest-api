@@ -1,4 +1,4 @@
-const getProfile = (req, res, dB) => {
+const getProfile = dB => (req, res) => {
   const { id } = req.params;
 
   dB.select('*')

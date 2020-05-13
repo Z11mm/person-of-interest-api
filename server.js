@@ -30,21 +30,13 @@ app.get('/', (req, res) => {
   res.send(dB.users);
 });
 
-app.post('/signin', (req, res) => {
-  signin.handleSignIn(req, res, dB, bcrypt);
-});
+app.post('/signin', signin.handleSignIn(dB, bcrypt));
 
-app.post('/signup', (req, res) => {
-  signup.handleSignUp(req, res, dB, bcrypt);
-});
+app.post('/signup', signup.handleSignUp(dB, bcrypt));
 
-app.get('/profile/:id', (req, res) => {
-  profile.getProfile(req, res, dB);
-});
+app.get('/profile/:id', profile.getProfile(dB));
 
-app.put('/image', (req, res) => {
-  image.setImageEntries(req, res, dB);
-});
+app.put('/image', image.setImageEntries(dB));
 
 app.listen(3000, () => {
   console.log('running on 3000...');

@@ -1,4 +1,4 @@
-const setImageEntries = (req, res,dB) => {
+const setImageEntries = dB => (req, res) => {
   const { id } = req.body;
 
   dB('users')
