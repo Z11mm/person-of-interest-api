@@ -2,8 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
+
 const signup = require('./controllers/signup');
 const signin = require('./controllers/signin');
+const profile = require('./controllers/profile');
 
 const dB = knex({
   client: 'pg',
@@ -35,21 +37,7 @@ app.post('/signup', (req, res) => {
   signup.handleSignUp(req, res, dB, bcrypt);
 });
 
-app.get('/profile/:id', (req, res) => {
-  const { id } = req.params;
-
-  dB.select('*')
-    .from('users')
-    .where({ id })
-    .then(user => {
-      if (user.length) {
-        res.json(user[0]);
-      } else {
-        res.status(400).json('Not found');
-      }
-    })
-    .catch(err => res.status(400).json('Error getting user'));
-});
+app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, dB) });
 
 app.put('/image', (req, res) => {
   const { id } = req.body;
