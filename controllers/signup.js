@@ -1,7 +1,10 @@
 const handleSignUp = (dB, bcrypt) => (req, res) => {
   const { email, password, name } = req.body;
-  const hash = bcrypt.hashSync(password);
+  if (!email || !password || !name) {
+    return res.status(400).json('incorrect form submission');
+  }
 
+  const hash = bcrypt.hashSync(password);
   dB.transaction(trx => {
     trx
       .insert({
@@ -29,4 +32,4 @@ const handleSignUp = (dB, bcrypt) => (req, res) => {
 
 module.exports = {
   handleSignUp: handleSignUp
-}
+};
