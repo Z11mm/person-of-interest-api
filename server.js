@@ -37,6 +37,7 @@ app.post('/signup', signup.handleSignUp(dB, bcrypt));
 app.get('/profile/:id', profile.getProfile(dB));
 
 app.put('/image', image.setImageEntries(dB));
+app.post('/imageurl', image.handleApiCall());
 
 app.listen(3000, () => {
   console.log('running on 3000...');
